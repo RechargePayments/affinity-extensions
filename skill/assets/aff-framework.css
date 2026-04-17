@@ -1,0 +1,694 @@
+/* =============================================================
+   Affinity CSS Framework
+   Branding-only classes for Recharge Affinity extensions.
+   Layout and spacing are delegated to Tailwind (tw: prefix).
+   ============================================================= */
+
+
+/* ---
+   Type scale
+--- */
+
+.aff-text-heading {
+  font-family: var(--recharge-typography-heading-font-family);
+  font-weight: var(--recharge-typography-heading-font-weight);
+  margin: 0;
+  padding: 0;
+}
+
+.aff-display-1 {
+  font-size: var(--recharge-typography-size-1);
+  line-height: 115%;
+}
+
+.aff-display-2 {
+  font-size: var(--recharge-typography-size-2);
+  line-height: 115%;
+}
+
+.aff-h1 {
+  font-size: var(--recharge-typography-size-3);
+  line-height: 123%;
+}
+
+.aff-h2 {
+  font-size: var(--recharge-typography-size-4);
+  line-height: 140%;
+}
+
+.aff-h3 {
+  font-size: var(--recharge-typography-size-5);
+  line-height: 150%;
+}
+
+.aff-h4 {
+  font-size: var(--recharge-typography-size-6);
+  line-height: 143%;
+}
+
+
+/* ---
+   Body text
+--- */
+
+.aff-text-body {
+  font-family: var(--recharge-typography-body-font-family);
+  font-weight: var(--recharge-typography-body-font-weight);
+  color: inherit;
+}
+
+.aff-text-base {
+  font-size: var(--recharge-typography-size-5);
+  line-height: 150%;
+  margin: 0;
+}
+
+.aff-text-sm {
+  font-size: var(--recharge-typography-size-6);
+  line-height: 143%;
+  margin: 0;
+}
+
+.aff-text-muted {
+  color: var(--recharge-color-neutral-70);
+}
+
+
+/* ---
+   Buttons
+--- */
+
+.aff-btn {
+  font-family: var(--recharge-typography-body-font-family);
+  border-radius: var(--recharge-button-border-radius);
+  font-size: var(--recharge-typography-size-5);
+  line-height: 150%;
+  padding: 10px 16px;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  border: 2px solid transparent;
+}
+
+.aff-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.aff-btn-sm {
+  font-size: var(--recharge-typography-size-6);
+}
+
+.aff-btn-full {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  line-height: 1;
+}
+
+.aff-btn-primary {
+  background-color: var(--recharge-button-brand);
+  border-color: var(--recharge-button-brand);
+  color: var(--recharge-button-color);
+  font-weight: 600;
+}
+
+.aff-btn-secondary {
+  background-color: var(--recharge-color-brand-85);
+  border-color: var(--recharge-color-brand-85);
+  color: var(--recharge-button-brand);
+}
+
+.aff-btn-tertiary {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--recharge-button-secondary);
+}
+
+
+/* ---
+   Link
+--- */
+
+.aff-link {
+  color: var(--recharge-button-secondary);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: var(--recharge-typography-size-5);
+}
+
+
+/* ---
+   Image
+--- */
+
+.aff-img {
+  border-radius: calc(var(--recharge-corners-radius) / 2);
+  max-width: 100%;
+}
+
+.aff-img-sm { width: 96px; }
+.aff-img-md { width: 128px; }
+.aff-img-lg { width: 200px; }
+
+
+/* ---
+   Radio option
+--- */
+
+.aff-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: calc(var(--recharge-corners-radius) / 2);
+  background-color: var(--recharge-color-brand-85);
+  color: var(--recharge-typography-primary);
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.aff-radio-option input[type="radio"] {
+  accent-color: var(--recharge-button-brand);
+}
+
+.aff-radio-option:has(input[type="radio"]:checked) {
+  border-color: var(--recharge-button-brand);
+}
+
+
+/* ---
+   Input
+   Apply aff-input to a wrapper <div>, not the <input> itself —
+   this matches how Recharge renders inputs and avoids style conflicts.
+--- */
+
+.aff-input {
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--recharge-color-neutral-40);
+  border-radius: calc(var(--recharge-corners-radius) / 2);
+  padding: 7px 12px;
+  min-height: 40px;
+  background-color: var(--recharge-cards-background);
+  transition-property: background-color, border-color, color;
+  transition-timing-function: ease;
+  transition-duration: 0.3s;
+}
+
+.aff-input:focus-within {
+  border-color: var(--recharge-color-brand-120);
+}
+
+.aff-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--recharge-typography-body-font-family);
+  font-size: var(--recharge-typography-size-5);
+  color: var(--recharge-color-neutral-80);
+  caret-color: var(--recharge-color-brand-120);
+}
+
+.aff-input input::placeholder {
+  color: var(--recharge-color-neutral-40);
+}
+
+
+/* ---
+   Card
+--- */
+
+.aff-card {
+  background-color: var(--recharge-cards-background);
+  border: 1px solid var(--recharge-cards-border-color);
+  border-radius: var(--recharge-corners-radius);
+  padding: 20px 20px 24px;
+}
+
+@media screen and (min-width: 1024px) {
+  .aff-card {
+    padding: 20px 24px 24px;
+  }
+}
+
+
+/* ---
+   Offer card
+   A secondary card that lives inside a parent card
+--- */
+
+.aff-card-offer {
+  background-color: var(--recharge-color-neutral-20);
+  border: 1px solid var(--recharge-color-neutral-10);
+  border-radius: calc(var(--recharge-corners-radius) / 2);
+  padding: 12px 16px 16px;
+}
+
+
+/* ---
+   Icon button
+   Modifier for .aff-btn — makes it square and icon-only.
+   Use with .aff-btn-primary / .aff-btn-secondary / .aff-btn-tertiary.
+--- */
+
+.aff-btn-icon {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border: none;
+  border-radius: calc(var(--recharge-corners-radius) / 2);
+}
+
+/* ---
+   Select
+   Apply aff-select to a wrapper <div>, same pattern as aff-input.
+   The wrapper uses position: relative for the chevron.
+--- */
+
+.aff-select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--recharge-color-neutral-40);
+  border-radius: calc(var(--recharge-corners-radius) / 2);
+  padding: 7px 12px;
+  min-height: 40px;
+  background-color: var(--recharge-cards-background);
+  transition-property: background-color, border-color, color;
+  transition-timing-function: ease;
+  transition-duration: 0.3s;
+}
+
+.aff-select:focus-within {
+  border-color: var(--recharge-color-brand-120);
+}
+
+.aff-select select {
+  flex: 1;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--recharge-typography-body-font-family);
+  font-size: var(--recharge-typography-size-5);
+  color: var(--recharge-color-neutral-80);
+  cursor: pointer;
+}
+
+/* Chevron icon — place a <span class="aff-select-chevron"> inside the wrapper after the <select> */
+.aff-select-chevron {
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  color: var(--recharge-color-neutral-70);
+  flex-shrink: 0;
+}
+
+
+/* ---
+   Quantity stepper
+   Apply aff-stepper to a wrapper <div>.
+   Inner structure: <button> − | <input type="number"> | <button> +
+--- */
+
+.aff-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--recharge-color-neutral-40);
+  border-radius: var(--recharge-corners-radius);
+  padding: 7px 8px;
+  min-height: 40px;
+  background-color: var(--recharge-cards-background);
+}
+
+.aff-stepper button {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.aff-stepper button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.aff-stepper input[type="number"] {
+  background: transparent;
+  border: none;
+  outline: none;
+  text-align: center;
+  width: 40px;
+  font-family: var(--recharge-typography-body-font-family);
+  font-size: var(--recharge-typography-size-5);
+  color: var(--recharge-color-neutral-80);
+  -moz-appearance: textfield;
+}
+
+.aff-stepper input[type="number"]::-webkit-inner-spin-button,
+.aff-stepper input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+
+/* ---
+   Badge
+--- */
+
+.aff-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 18px;
+  font-size: var(--recharge-typography-size-7);
+  line-height: 133%;
+  font-family: var(--recharge-typography-body-font-family);
+  font-weight: var(--recharge-typography-body-font-weight);
+  background-color: #ebeaea;
+  color: var(--recharge-typography-primary, #3c352d);
+}
+
+.aff-badge-warning {
+  background-color: var(--recharge-color-caution, #f5a623);
+  color: var(--recharge-color-neutral, #0b1317);
+}
+
+
+/* ---
+   Alert
+   Usage: <div class="aff-alert aff-alert-info" role="alert">
+            <svg>...</svg>
+            <p class="aff-text-body aff-text-sm">Message</p>
+          </div>
+   Variants: aff-alert-info · aff-alert-success · aff-alert-warning · aff-alert-error
+--- */
+
+.aff-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: var(--recharge-corners-radius, 8px);
+  color: var(--recharge-typography-primary, #3c352d);
+}
+
+.aff-alert svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.aff-alert-info {
+  background-color: var(--recharge-color-neutral-20, #f7f7f7);
+  border-color: #ebeaea;
+}
+
+.aff-alert-success {
+  background-color: var(--recharge-color-positive10, #cdeedd);
+  border-color: var(--recharge-color-positive, #00853e);
+  color: var(--recharge-color-neutral, #0b1317);
+}
+
+.aff-alert-warning {
+  background-color: var(--recharge-color-caution10, #fef6e4);
+  border-color: var(--recharge-color-caution120, #c97a00);
+  color: var(--recharge-color-neutral, #0b1317);
+}
+
+.aff-alert-error {
+  background-color: var(--recharge-color-critical10, #fde8e8);
+  border-color: var(--recharge-color-critical, #cc2929);
+  color: var(--recharge-color-neutral, #0b1317);
+}
+
+
+/* ---
+   Toast
+   The toast reuses .aff-alert variants but adds a shadow, smaller radius,
+   and a fixed-position wrapper.
+
+   Usage:
+   <div class="aff-toast-wrapper" id="my-toast">
+     <div class="aff-alert aff-alert-success aff-toast" role="status">
+       <svg>...</svg>
+       <p class="aff-text-body aff-text-sm">Message</p>
+       <button class="aff-toast-close" aria-label="Close">×</button>
+     </div>
+   </div>
+--- */
+
+.aff-toast-wrapper {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 556px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.aff-toast {
+  pointer-events: all;
+  border-radius: calc(var(--recharge-corners-radius, 8px) / 2);
+  box-shadow: rgba(25, 29, 72, 0.15) 0px 1px 4px 0px, rgba(25, 29, 72, 0.2) 0px 2px 12px 0px;
+}
+
+.aff-toast-close {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 18px;
+}
+
+.aff-toast-close:hover {
+  opacity: 1;
+}
+
+
+/* ---
+   Toggle
+   Usage: <label class="aff-toggle"><input type="checkbox"><span class="aff-toggle-track"></span><span>Label</span></label>
+--- */
+
+.aff-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+/* Visually hide the native checkbox while keeping it accessible */
+.aff-toggle input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.aff-toggle-track {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 48px;
+  height: 26px;
+  border-radius: 34px;
+  background-color: var(--recharge-color-neutral-40);
+  transition: background-color 0.3s;
+}
+
+/* Thumb */
+.aff-toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.aff-toggle input[type="checkbox"]:checked + .aff-toggle-track {
+  background-color: var(--recharge-color-brand);
+}
+
+.aff-toggle input[type="checkbox"]:checked + .aff-toggle-track::after {
+  transform: translateX(22px);
+}
+
+.aff-toggle input[type="checkbox"]:focus-visible + .aff-toggle-track {
+  outline: 2px solid var(--recharge-color-brand);
+  outline-offset: 2px;
+}
+
+
+/* ---
+   Callout
+   A neutral inline note box with an icon and text. Use for tips, reminders, or
+   non-critical contextual information that doesn't warrant an alert.
+   Usage: <div class="aff-callout"><svg>…</svg><p class="aff-text-body aff-text-sm">…</p></div>
+--- */
+
+.aff-callout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--recharge-cards-background);
+  border: 1px solid var(--recharge-color-neutral-30, #e8e4e0);
+  border-radius: calc(var(--recharge-corners-radius, 8px) / 2);
+  padding: 8px 12px;
+}
+
+.aff-callout svg {
+  flex-shrink: 0;
+  color: var(--recharge-color-brand);
+}
+
+
+/* ---
+   Modal
+--- */
+
+.aff-modal-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: var(--recharge-app-modal-zIndex);
+  background: rgba(11, 19, 23, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  isolation: isolate;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  will-change: opacity;
+}
+
+.aff-modal-wrapper.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.aff-modal {
+  position: relative;
+  width: 600px;
+  max-width: 100vw;
+  max-height: 640px;
+  overflow: auto;
+  background-color: var(--recharge-cards-background);
+  padding: 24px;
+  border-radius: var(--recharge-corners-radius, 8px) var(--recharge-corners-radius, 8px) 0 0;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  gap: 16px !important;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  will-change: opacity, transform;
+}
+
+.aff-modal-wrapper.is-open .aff-modal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.aff-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.aff-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--recharge-typography-primary);
+  line-height: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@media screen and (min-width: 1024px) {
+  .aff-modal-wrapper {
+    align-items: center;
+  }
+  .aff-modal {
+    border-radius: var(--recharge-corners-radius, 8px);
+  }
+}
+
+/* ─── Tabs ─────────────────────────────────────────────────────────────── */
+
+.aff-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.aff-tab {
+  padding: 0 8px 12px;
+  font-size: var(--recharge-typography-size-5, 1rem);
+  font-family: var(--recharge-typography-body-font-family, inherit);
+  font-weight: var(--recharge-typography-body-font-weight, 400);
+  color: #b1aeab;
+  border: none;
+  border-bottom: 2px solid #b1aeab;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.aff-tab[aria-selected="true"],
+.aff-tab.is-active {
+  font-weight: var(--recharge-typography-heading-font-weight, 600);
+  color: var(--recharge-typography-primary, #3c352d);
+  border-bottom-color: var(--recharge-button-brand, #1773b0);
+}
+
+.aff-tab:hover:not([aria-selected="true"]):not(.is-active) {
+  color: var(--recharge-typography-secondary, #545a5d);
+}
+
+.aff-tab-panel {
+  display: none;
+}
+
+.aff-tab-panel.is-active {
+  display: block;
+  padding-top: 20px;
+}
