@@ -28,6 +28,8 @@ const TARGET_VARIANT_ID = 'YOUR_TARGET_VARIANT_ID'; // CUSTOMIZE: target variant
 
 Search for `// CUSTOMIZE:` comments in `_render()` to update the badge text, headline, body copy, and button label.
 
+`AFF_CSS` and `TW_CSS` hold the framework styles — copy them from [`css-constants.js`](../css-constants.js). See the [main README](../README.md) for full setup instructions.
+
 ## How it works
 
 On mount the extension authenticates with the Recharge SDK and fetches the customer's active subscriptions. It looks for one where `external_product_id.ecommerce` matches `SOURCE_PRODUCT_ID` and `external_variant_id.ecommerce` is not already `TARGET_VARIANT_ID`. If none is found the extension hides itself and returns. Otherwise it fetches product details for `TARGET_VARIANT_ID` and renders the offer card. On confirmation it calls `updateSubscription` with `{ commit: true }` to apply the change immediately.

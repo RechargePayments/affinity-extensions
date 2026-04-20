@@ -38,6 +38,8 @@ const TABS = [
 
 Search for `// CUSTOMIZE` comments to update the `#products` initial state and the `refresh()` reset to match your tab keys.
 
+`AFF_CSS` and `TW_CSS` hold the framework styles — copy them from [`css-constants.js`](../css-constants.js). See the [main README](../README.md) for full setup instructions.
+
 ## How it works
 
 On mount the extension authenticates with the Recharge SDK and fires two parallel requests: a product search (up to 50 products) and a fetch of the next queued charge. Tab filtering is applied client-side by matching product tags against `TAB_TAGS`. Already-added variants are tracked in a `Set` and reflected on card buttons without a full re-render — only the carousel track re-renders on tab changes. The detail modal is built on demand and removed from the DOM after its close animation completes.

@@ -35,6 +35,8 @@ const DISCOUNT_PERCENTS = [15, 25, 30];
 
 Search for `// BRAND:` comments to update store-specific copy (headings, progress text) and `// CUSTOMIZE:` for the collectible shape drawn on the game board.
 
+`AFF_CSS` and `TW_CSS` hold the framework styles — copy them from [`css-constants.js`](../css-constants.js). See the [main README](../README.md) for full setup instructions.
+
 ## How it works
 
 On mount the extension authenticates with the Recharge SDK and searches for up to 250 products. It filters for those that support both subscription and one-time purchase, shuffles the result, and picks the first three as level rewards. The game loop runs in a `setInterval` that calls `tick()` each frame — applying direction to the snake head, checking wall and self-collision, consuming the apple when reached, and transitioning to the reward phase once the per-level apple target is met. All state is held on the class instance and `render()` is called after every state change. The canvas is redrawn via the 2D API in `drawBoard()`.

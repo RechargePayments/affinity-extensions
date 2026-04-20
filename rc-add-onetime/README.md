@@ -24,6 +24,8 @@ Lets customers add a single product to their upcoming charge without starting a 
 const VARIANT_ID = 'YOUR_VARIANT_ID'; // CUSTOMIZE: your variant ID
 ```
 
+`AFF_CSS` and `TW_CSS` hold the framework styles — copy them from [`css-constants.js`](../css-constants.js). See the [main README](../README.md) for full setup instructions.
+
 ## How it works
 
 On mount the extension authenticates via the Recharge JS SDK and fires two parallel requests: one for the customer's next queued charge (address ID and scheduled date) and one to look up the product by variant ID. If the variant is already in the charge's line items the component hides itself and returns early. Otherwise it renders the product card. On add, it calls `createOnetime` with `{ commit: true }` so the change is applied to the queued charge immediately. Failures surface an inline error state with a retry button.
