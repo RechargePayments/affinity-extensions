@@ -13,7 +13,7 @@ Surfaces a single product as a one-time addition to the customer's next charge. 
 
 ## Screenshots
 
-![Idle state — product card with Add to order button](../screenshots/add-onetime.png)
+![](../screenshots/add-onetime.png)
 
 ## Configuration
 
@@ -35,14 +35,4 @@ Alternatively, host `skills/affinity-framework/assets/aff-framework.css` and `sk
 
 On mount the extension authenticates via the Recharge JS SDK and fires two parallel requests: one to fetch the next queued charge (to get the address ID and scheduled date), and one to look up the product by variant ID. If the variant is already in the charge's line items the component hides itself and returns early. Otherwise it renders the product card. On add, it calls `createOnetime` with `{ commit: true }` so the change is applied to the queued charge immediately.
 
-## Registration
-
 Tag name: `rc-add-onetime`
-
-1. Go to **Storefront → Customer portal → [theme] → Home page → Customize**
-2. **Add a section → Custom extensions → Create a custom extension**
-3. **Upload** `rc-add-onetime.js` directly in the dialog — it gets hosted in your Shopify store files and the URL is filled in automatically
-4. Enter the tag name `rc-add-onetime` and a display name
-5. Save, add to a page column, and enable **Make this extension visible to customers**
-
-Alternatively, host the file in your Shopify theme assets (`{{ 'rc-add-onetime.js' | asset_url }}`), an S3 bucket, or any public URL, and paste the URL manually instead of uploading.

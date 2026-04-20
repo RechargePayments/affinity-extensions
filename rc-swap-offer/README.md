@@ -1,6 +1,6 @@
 # rc-swap-offer
 
-Shows a personalised variant-swap offer to customers who have an active subscription on a specific product but are not yet on the target variant. One click updates their subscription.
+Shows a personalized variant-swap offer to customers who have an active subscription on a specific product but are not yet on the target variant. One click updates their subscription.
 
 ## What it does
 
@@ -13,7 +13,7 @@ Shows a personalised variant-swap offer to customers who have an active subscrip
 
 ## Screenshots
 
-![Idle state — badge, copy, and CTA left; product image right](../screenshots/swap-offer.png)
+![](../screenshots/swap-offer.png)
 
 ## Configuration
 
@@ -38,14 +38,4 @@ Alternatively, host `skills/affinity-framework/assets/aff-framework.css` and `sk
 
 On mount the extension authenticates with the Recharge SDK and fetches the customer's active subscriptions. It looks for one where `external_product_id.ecommerce` matches `SOURCE_PRODUCT_ID` and `external_variant_id.ecommerce` is not already `TARGET_VARIANT_ID`. If none is found the extension hides itself and returns. Otherwise it fetches product details for `TARGET_VARIANT_ID` and renders the offer card. On confirmation it calls `updateSubscription` with `{ commit: true }` to apply the change immediately.
 
-## Registration
-
 Tag name: `rc-swap-offer`
-
-1. Go to **Storefront → Customer portal → [theme] → Home page → Customize**
-2. **Add a section → Custom extensions → Create a custom extension**
-3. **Upload** `rc-swap-offer.js` directly in the dialog — it gets hosted in your Shopify store files and the URL is filled in automatically
-4. Enter the tag name `rc-swap-offer` and a display name
-5. Save, add to a page column, and enable **Make this extension visible to customers**
-
-Alternatively, host the file in your Shopify theme assets (`{{ 'rc-swap-offer.js' | asset_url }}`), an S3 bucket, or any public URL, and paste the URL manually instead of uploading.

@@ -1,4 +1,4 @@
-# subscriptions-snake
+# rc-subscriptions-snake
 
 A playable Snake mini-game that rewards customers with escalating subscription discounts as they complete progressively harder levels.
 
@@ -15,15 +15,15 @@ A playable Snake mini-game that rewards customers with escalating subscription d
 
 ## Screenshots
 
-![Desktop — game board and reward panel side by side](../screenshots/subscriptions-snake-desktop.png)
+![](../screenshots/subscriptions-snake-desktop.png)
 
-![Mobile — game board and reward panel stacked](../screenshots/subscriptions-snake.png)
+![](../screenshots/subscriptions-snake.png)
 
-![Reward modal — revealed product with claim button](../screenshots/subscriptions-snake-reward.png)
+![](../screenshots/subscriptions-snake-reward.png)
 
 ## Configuration
 
-Open `subscriptions-snake.js` and update the constants at the top of the file.
+Open `rc-subscriptions-snake.js` and update the constants at the top of the file.
 
 | Constant | What to put here |
 |---|---|
@@ -39,7 +39,7 @@ Search the file for `// BRAND:` and `// CUSTOMIZE:` comments to update store-spe
 
 ## CSS setup
 
-Paste the contents of `AFF_CSS` and `TW_CSS` from [`css-constants.js`](../css-constants.js) directly into the matching constants at the top of `subscriptions-snake.js`. No hosting required.
+Paste the contents of `AFF_CSS` and `TW_CSS` from [`css-constants.js`](../css-constants.js) directly into the matching constants at the top of `rc-subscriptions-snake.js`. No hosting required.
 
 Alternatively, host `skills/affinity-framework/assets/aff-framework.css` and `skills/affinity-framework/assets/tw.css` on your own CDN and swap the `<style>` injection in `connectedCallback` to `<link>` tags. See `skills/affinity-framework/SKILL.md` for the pattern.
 
@@ -47,14 +47,4 @@ Alternatively, host `skills/affinity-framework/assets/aff-framework.css` and `sk
 
 On mount the extension authenticates with the Recharge SDK and runs a product search for up to 250 products. It filters for those that support both subscription and one-time purchase, shuffles the result, and picks the first three as rewards. The game loop runs in a `setInterval` that calls `tick()` each frame. `tick()` applies the current direction to the snake head, checks for collisions with walls or the snake's own body, consumes the apple if reached, and transitions to the `reward` phase when the apple target for the level is met. State is held in a plain object on the class instance and `render()` is called after every state change. The canvas is redrawn via the 2D API in `drawBoard()`.
 
-## Registration
-
-Tag name: `subscriptions-snake`
-
-1. Go to **Storefront → Customer portal → [theme] → Home page → Customize**
-2. **Add a section → Custom extensions → Create a custom extension**
-3. **Upload** `subscriptions-snake.js` directly in the dialog — it gets hosted in your Shopify store files and the URL is filled in automatically
-4. Enter the tag name `subscriptions-snake` and a display name
-5. Save, add to a page column, and enable **Make this extension visible to customers**
-
-Alternatively, host the file in your Shopify theme assets (`{{ 'subscriptions-snake.js' | asset_url }}`), an S3 bucket, or any public URL, and paste the URL manually instead of uploading.
+Tag name: `rc-subscriptions-snake`

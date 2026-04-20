@@ -5,7 +5,7 @@ A horizontally scrollable product carousel with tag-based tab filtering and a pr
 ## What it does
 
 - Fetches all Recharge products and the customer's next queued charge in parallel
-- Organises products into tabs based on Shopify tags (configurable — see Configuration below)
+- Organizes products into tabs based on Shopify tags (configurable — see Configuration below)
 - Renders a scrollable carousel with prev/next arrow buttons
 - Marks items already in the upcoming charge as "Added ✓" and disables their buttons
 - Tapping a product image opens a detail modal with a full image gallery, description, and an add button
@@ -14,7 +14,7 @@ A horizontally scrollable product carousel with tag-based tab filtering and a pr
 
 ## Screenshots
 
-![Carousel — All tab with Add buttons](../screenshots/carousel-all.png)
+![](../screenshots/carousel-all.png)
 
 ## Configuration
 
@@ -56,14 +56,4 @@ Alternatively, host `skills/affinity-framework/assets/aff-framework.css` and `sk
 
 On mount the extension authenticates with the Recharge SDK and fires two parallel requests: a product search (up to 50 products) and a fetch of the next queued charge. Tab filtering is applied client-side by matching product tags against `TAB_TAGS`. Already-added variants are tracked in a `Set` and reflected on buttons without a full re-render — only the carousel track re-renders on tab changes. The product detail modal is built and injected into the component DOM on demand and removed after its close animation completes.
 
-## Registration
-
 Tag name: `rc-product-carousel`
-
-1. Go to **Storefront → Customer portal → [theme] → Home page → Customize**
-2. **Add a section → Custom extensions → Create a custom extension**
-3. **Upload** `rc-product-carousel.js` directly in the dialog — it gets hosted in your Shopify store files and the URL is filled in automatically
-4. Enter the tag name `rc-product-carousel` and a display name
-5. Save, add to a page column, and enable **Make this extension visible to customers**
-
-Alternatively, host the file in your Shopify theme assets (`{{ 'rc-product-carousel.js' | asset_url }}`), an S3 bucket, or any public URL, and paste the URL manually instead of uploading.

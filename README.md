@@ -9,7 +9,7 @@ Reference implementations for the [Recharge Affinity Framework](./skills/affinit
 | [`rc-add-onetime/`](./rc-add-onetime/) | `rc-add-onetime` | Offer a single product as a one-time addition to the customer's next charge |
 | [`rc-product-carousel/`](./rc-product-carousel/) | `rc-product-carousel` | Horizontally scrollable carousel of add-on products with tab filtering and a product detail modal |
 | [`rc-swap-offer/`](./rc-swap-offer/) | `rc-swap-offer` | Personalized variant-swap offer for customers on a specific subscription product |
-| [`subscriptions-snake/`](./subscriptions-snake/) | `subscriptions-snake` | Snake mini-game that unlocks escalating subscription discounts across three levels |
+| [`rc-subscriptions-snake/`](./rc-subscriptions-snake/) | `rc-subscriptions-snake` | Snake mini-game that unlocks escalating subscription discounts across three levels |
 
 The `skills/affinity-framework/` folder contains the Affinity Framework itself — documentation, CSS assets, component reference, layout recipes, and JS utilities. Treat it as read-only reference material.
 
@@ -41,7 +41,7 @@ Each extension has a config block near the top of the file. Minimum required cha
 | `rc-add-onetime` | `VARIANT_ID` |
 | `rc-product-carousel` | `TAB_TAGS` and `TABS` (to match your Shopify product tags) |
 | `rc-swap-offer` | `SOURCE_PRODUCT_ID` and `TARGET_VARIANT_ID` |
-| `subscriptions-snake` | `DISCOUNT_TIERS`, `DISCOUNT_CODES`, `DISCOUNT_PERCENTS` |
+| `rc-subscriptions-snake` | `DISCOUNT_TIERS`, `DISCOUNT_CODES`, `DISCOUNT_PERCENTS` |
 
 Search each file for `// CUSTOMIZE:` and `// BRAND:` comments — they mark every value that's store-specific.
 
@@ -102,7 +102,7 @@ affinity-extensions/
 ├── rc-swap-offer/
 │   ├── rc-swap-offer.js
 │   └── README.md
-└── subscriptions-snake/
-    ├── subscriptions-snake.js
+└── rc-subscriptions-snake/
+    ├── rc-subscriptions-snake.js
     └── README.md
 ```

@@ -10,7 +10,7 @@ const TW_CSS = ``;
 
 // ─── Configure these for your store ──────────────────────────────────────────
 
-const TAG_NAME = 'subscriptions-snake';
+const TAG_NAME = 'rc-subscriptions-snake';
 
 // CUSTOMIZE: Discount tiers unlocked by completing each level.
 // Index 0 = Level 1 reward, 1 = Level 2, 2 = Level 3.
