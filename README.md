@@ -45,16 +45,17 @@ Each extension has a config block near the top of the file. Minimum required cha
 
 Search each file for `// CUSTOMIZE:` and `// BRAND:` comments — they mark every value that's store-specific.
 
-### 3. Host the file
+### 3. Host the file and register it
 
-Upload the `.js` file to Shopify theme assets, an S3 bucket, jsDelivr, or any public URL. The Recharge portal fetches it by URL.
-
-### 4. Register in the Recharge portal
+The Recharge page builder handles hosting for you — no separate CDN needed.
 
 1. Go to **Storefront → Customer portal → [your theme] → Home page → Customize**
 2. **Add a section → Custom extensions → Create a custom extension**
-3. Paste the hosted file URL, enter the tag name (e.g. `rc-add-onetime`), and give it a name
-4. Save, drag it into a column, and toggle **Make this extension visible to customers**
+3. **Upload** the `.js` file directly in the dialog — it gets hosted in your Shopify store files automatically and the URL is filled in for you
+4. Enter the tag name (e.g. `rc-add-onetime`) and give it a name
+5. Save, drag it into a column, and toggle **Make this extension visible to customers**
+
+**Alternatives for hosting the file:** Shopify theme assets (`{{ 'rc-add-onetime.js' | asset_url }}`), an S3 bucket, jsDelivr, or any other public URL — paste the URL manually in step 3 instead of uploading.
 
 ---
 

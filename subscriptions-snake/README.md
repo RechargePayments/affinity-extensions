@@ -57,8 +57,10 @@ On mount the extension authenticates with the Recharge SDK and runs a product se
 
 Tag name: `subscriptions-snake`
 
-1. Host `subscriptions-snake.js` on a publicly accessible URL
-2. In the merchant portal go to **Storefront → Customer portal → [theme] → Home page → Customize**
-3. **Add a section → Custom extensions → Create a custom extension**
-4. Enter the file URL, tag name `subscriptions-snake`, and an extension name
+1. Go to **Storefront → Customer portal → [theme] → Home page → Customize**
+2. **Add a section → Custom extensions → Create a custom extension**
+3. **Upload** `subscriptions-snake.js` directly in the dialog — it gets hosted in your Shopify store files and the URL is filled in automatically
+4. Enter the tag name `subscriptions-snake` and a display name
 5. Save, add to a page column, and enable **Make this extension visible to customers**
+
+Alternatively, host the file in your Shopify theme assets (`{{ 'subscriptions-snake.js' | asset_url }}`), an S3 bucket, or any public URL, and paste the URL manually instead of uploading.

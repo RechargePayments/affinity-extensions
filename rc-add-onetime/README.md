@@ -43,8 +43,10 @@ On mount the extension authenticates via the Recharge JS SDK and fires two paral
 
 Tag name: `rc-add-onetime`
 
-1. Host `rc-add-onetime.js` on a publicly accessible URL (e.g. Shopify theme assets)
-2. In the merchant portal go to **Storefront → Customer portal → [theme] → Home page → Customize**
-3. **Add a section → Custom extensions → Create a custom extension**
-4. Enter the file URL, tag name `rc-add-onetime`, and an extension name
+1. Go to **Storefront → Customer portal → [theme] → Home page → Customize**
+2. **Add a section → Custom extensions → Create a custom extension**
+3. **Upload** `rc-add-onetime.js` directly in the dialog — it gets hosted in your Shopify store files and the URL is filled in automatically
+4. Enter the tag name `rc-add-onetime` and a display name
 5. Save, add to a page column, and enable **Make this extension visible to customers**
+
+Alternatively, host the file in your Shopify theme assets (`{{ 'rc-add-onetime.js' | asset_url }}`), an S3 bucket, or any public URL, and paste the URL manually instead of uploading.
