@@ -8,7 +8,7 @@ Reference implementations for the [Recharge Affinity Framework](./skill/SKILL.md
 |---|---|---|
 | [`rc-add-onetime/`](./rc-add-onetime/) | `rc-add-onetime` | Offer a single product as a one-time addition to the customer's next charge |
 | [`rc-product-carousel/`](./rc-product-carousel/) | `rc-product-carousel` | Horizontally scrollable carousel of add-on products with tab filtering and a product detail modal |
-| [`rc-swap-offer/`](./rc-swap-offer/) | `rc-swap-offer` | Personalised variant-swap offer for customers on a specific subscription product |
+| [`rc-swap-offer/`](./rc-swap-offer/) | `rc-swap-offer` | Personalized variant-swap offer for customers on a specific subscription product |
 | [`subscriptions-snake/`](./subscriptions-snake/) | `subscriptions-snake` | Snake mini-game that unlocks escalating subscription discounts across three levels |
 
 The `skill/` folder contains the Affinity Framework itself — documentation, CSS assets, component reference, layout recipes, and JS utilities. Treat it as read-only reference material.
@@ -53,7 +53,7 @@ The Recharge page builder handles hosting for you — no separate CDN needed.
 2. **Add a section → Custom extensions → Create a custom extension**
 3. **Upload** the `.js` file directly in the dialog — it gets hosted in your Shopify store files automatically and the URL is filled in for you
 4. Enter the tag name (e.g. `rc-add-onetime`) and give it a name
-5. Save, drag it into a column, and toggle **Make this extension visible to customers**
+5. Save, drag it into the page, and toggle **Make this extension visible to customers**
 
 **Alternatives for hosting the file:** Shopify theme assets (`{{ 'rc-add-onetime.js' | asset_url }}`), an S3 bucket, jsDelivr, or any other public URL — paste the URL manually in step 3 instead of uploading.
 
@@ -63,7 +63,7 @@ The Recharge page builder handles hosting for you — no separate CDN needed.
 
 Extensions are plain `HTMLElement` subclasses (no Shadow DOM). Styling uses two layers:
 
-- **`aff-*` classes** — branding classes that reference Recharge CSS design tokens (colours, radii, font families). Applied by the portal automatically based on the merchant's theme.
+- **`aff-*` classes** — branding classes that reference Recharge CSS design tokens (colors, radius, font families). Applied by the portal automatically based on the merchant's theme.
 - **`tw:` prefixed classes** — scoped Tailwind utilities for layout and spacing.
 
 Both layers are in `skill/assets/`. The `css-constants.js` file at the root exports them as JS string constants so you can paste them directly into extension files without any build step.
