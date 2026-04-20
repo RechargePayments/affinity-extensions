@@ -14,15 +14,13 @@ A horizontally scrollable product carousel with tag-based tab filtering and a pr
 
 ## Screenshots
 
-<!-- screenshot: carousel — All tab, several products visible with Add buttons -->
+![Carousel — All tab](./screenshots/carousel-all.png)
 
-<!-- screenshot: tab switching — a category tab selected, filtered product list -->
-
-<!-- screenshot: product detail modal — image gallery, description, Add button -->
-
-<!-- screenshot: loading state — spinner centred below heading -->
-
-<!-- screenshot: error state — error alert with retry button -->
+<!-- Add screenshots to the screenshots/ folder and uncomment the lines below -->
+<!-- ![Carousel — filtered tab](./screenshots/carousel-tab.png) -->
+<!-- ![Product detail modal](./screenshots/modal.png) -->
+<!-- ![Loading state](./screenshots/loading.png) -->
+<!-- ![Error state](./screenshots/error.png) -->
 
 ## Configuration
 
