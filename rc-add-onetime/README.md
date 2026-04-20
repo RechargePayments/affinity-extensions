@@ -33,7 +33,7 @@ Open `rc-add-onetime.js` and update the constants at the top of the file before 
 
 Paste the contents of `AFF_CSS` and `TW_CSS` from [`css-constants.js`](../css-constants.js) directly into the matching constants at the top of `rc-add-onetime.js`. No hosting required.
 
-Alternatively, host `skill/assets/aff-framework.css` and `skill/assets/tw.css` on your own CDN and swap the `<style>` injection in `connectedCallback` to `<link>` tags pointing to those URLs. The pattern is shown in `skill/SKILL.md`.
+Alternatively, host `skills/affinity-framework/assets/aff-framework.css` and `skills/affinity-framework/assets/tw.css` on your own CDN and swap the `<style>` injection in `connectedCallback` to `<link>` tags pointing to those URLs. The pattern is shown in `skills/affinity-framework/SKILL.md`.
 
 ## How it works
 

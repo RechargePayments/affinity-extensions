@@ -1,6 +1,6 @@
 # Affinity Extensions
 
-Reference implementations for the [Recharge Affinity Framework](./skill/SKILL.md) — copy-paste-ready custom extensions for the Recharge customer portal, styled to match your brand automatically via CSS design tokens.
+Reference implementations for the [Recharge Affinity Framework](./skills/affinity-framework/SKILL.md) — copy-paste-ready custom extensions for the Recharge customer portal, styled to match your brand automatically via CSS design tokens.
 
 ## What's included
 
@@ -11,7 +11,7 @@ Reference implementations for the [Recharge Affinity Framework](./skill/SKILL.md
 | [`rc-swap-offer/`](./rc-swap-offer/) | `rc-swap-offer` | Personalized variant-swap offer for customers on a specific subscription product |
 | [`subscriptions-snake/`](./subscriptions-snake/) | `subscriptions-snake` | Snake mini-game that unlocks escalating subscription discounts across three levels |
 
-The `skill/` folder contains the Affinity Framework itself — documentation, CSS assets, component reference, layout recipes, and JS utilities. Treat it as read-only reference material.
+The `skills/affinity-framework/` folder contains the Affinity Framework itself — documentation, CSS assets, component reference, layout recipes, and JS utilities. Treat it as read-only reference material.
 
 ---
 
@@ -30,7 +30,7 @@ Open [`css-constants.js`](./css-constants.js) in this repo and paste the full co
 
 That's it — no hosting, no CDN dependency. The CSS is injected into the page via `<style>` tags the first time the component mounts.
 
-**Alternative:** host `skill/assets/aff-framework.css` (and optionally `skill/assets/tw.css`) on your own CDN and inject them as `<link>` tags instead. See `skill/SKILL.md` for the exact pattern.
+**Alternative:** host `skills/affinity-framework/assets/aff-framework.css` (and optionally `skills/affinity-framework/assets/tw.css`) on your own CDN and inject them as `<link>` tags instead. See `skills/affinity-framework/SKILL.md` for the exact pattern.
 
 ### 2. Configure store-specific values
 
@@ -66,13 +66,13 @@ Extensions are plain `HTMLElement` subclasses (no Shadow DOM). Styling uses two 
 - **`aff-*` classes** — branding classes that reference Recharge CSS design tokens (colors, radius, font families). Applied by the portal automatically based on the merchant's theme.
 - **`tw:` prefixed classes** — scoped Tailwind utilities for layout and spacing.
 
-Both layers are in `skill/assets/`. The `css-constants.js` file at the root exports them as JS string constants so you can paste them directly into extension files without any build step.
+Both layers are in `skills/affinity-framework/assets/`. The `css-constants.js` file at the root exports them as JS string constants so you can paste them directly into extension files without any build step.
 
-Full API documentation: [`skill/SKILL.md`](./skill/SKILL.md)
-Component reference: [`skill/references/components.md`](./skill/references/components.md)
-Layout recipes: [`skill/references/examples.md`](./skill/references/examples.md)
-JS utilities (modal, toast, tabs, stepper): [`skill/references/js-utilities.md`](./skill/references/js-utilities.md)
-Recharge SDK reference: [`skill/references/sdk.md`](./skill/references/sdk.md)
+Full API documentation: [`skills/affinity-framework/SKILL.md`](./skills/affinity-framework/SKILL.md)
+Component reference: [`skills/affinity-framework/references/components.md`](./skills/affinity-framework/references/components.md)
+Layout recipes: [`skills/affinity-framework/references/examples.md`](./skills/affinity-framework/references/examples.md)
+JS utilities (modal, toast, tabs, stepper): [`skills/affinity-framework/references/js-utilities.md`](./skills/affinity-framework/references/js-utilities.md)
+Recharge SDK reference: [`skills/affinity-framework/references/sdk.md`](./skills/affinity-framework/references/sdk.md)
 
 ---
 
@@ -82,16 +82,17 @@ Recharge SDK reference: [`skill/references/sdk.md`](./skill/references/sdk.md)
 affinity-extensions/
 ├── README.md                        ← you are here
 ├── css-constants.js                 ← AFF_CSS and TW_CSS as copy-pasteable JS constants
-├── skill/
-│   ├── SKILL.md
-│   ├── assets/
-│   │   ├── aff-framework.css
-│   │   └── tw.css
-│   └── references/
-│       ├── components.md
-│       ├── examples.md
-│       ├── js-utilities.md
-│       └── sdk.md
+├── skills/
+│   └── affinity-framework/
+│       ├── SKILL.md
+│       ├── assets/
+│       │   ├── aff-framework.css
+│       │   └── tw.css
+│       └── references/
+│           ├── components.md
+│           ├── examples.md
+│           ├── js-utilities.md
+│           └── sdk.md
 ├── rc-add-onetime/
 │   ├── rc-add-onetime.js
 │   └── README.md

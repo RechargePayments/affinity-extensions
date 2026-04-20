@@ -47,7 +47,7 @@ Search the file for `// BRAND:` and `// CUSTOMIZE:` comments to update store-spe
 
 Paste the contents of `AFF_CSS` and `TW_CSS` from [`css-constants.js`](../css-constants.js) directly into the matching constants at the top of `subscriptions-snake.js`. No hosting required.
 
-Alternatively, host `skill/assets/aff-framework.css` and `skill/assets/tw.css` on your own CDN and swap the `<style>` injection in `connectedCallback` to `<link>` tags. See `skill/SKILL.md` for the pattern.
+Alternatively, host `skills/affinity-framework/assets/aff-framework.css` and `skills/affinity-framework/assets/tw.css` on your own CDN and swap the `<style>` injection in `connectedCallback` to `<link>` tags. See `skills/affinity-framework/SKILL.md` for the pattern.
 
 ## How it works
 
