@@ -1,9 +1,9 @@
 // Affinity Framework CSS constants
 //
 // Copy AFF_CSS and TW_CSS into your extension file, then inject them in
-// connectedCallback via <style> tags (see skill/SKILL.md for the exact pattern).
+// connectedCallback via <style> tags (see skills/affinity-framework/SKILL.md for the exact pattern).
 //
-// Alternatively, host skill/assets/aff-framework.css and skill/assets/tw.css
+// Alternatively, host skills/affinity-framework/assets/aff-framework.css and skills/affinity-framework/assets/tw.css
 // on your own CDN and inject them as <link> tags instead.
 
 export const AFF_CSS = `/* =============================================================
