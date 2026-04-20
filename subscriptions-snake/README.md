@@ -15,17 +15,11 @@ A playable Snake mini-game that rewards customers with escalating subscription d
 
 ## Screenshots
 
-<!-- screenshot: intro state — game board + mystery reward card with Start button -->
+![Desktop — game board and reward panel side by side](../screenshots/subscriptions-snake-desktop.png)
 
-<!-- screenshot: playing state — snake moving on board, progress counter in reward panel -->
+![Mobile — game board and reward panel stacked](../screenshots/subscriptions-snake.png)
 
-<!-- screenshot: reward modal — revealed product image, price, claim button -->
-
-<!-- screenshot: claimed state — discount code displayed in callout, Continue button -->
-
-<!-- screenshot: lost state — error alert with Retry and Restart options -->
-
-<!-- screenshot: narrow layout (mobile) — board and panel stacked vertically -->
+![Reward modal — revealed product with claim button](../screenshots/subscriptions-snake-reward.png)
 
 ## Configuration
 

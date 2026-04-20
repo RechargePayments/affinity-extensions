@@ -13,11 +13,7 @@ Surfaces a single product as a one-time addition to the customer's next charge. 
 
 ## Screenshots
 
-<!-- screenshot: idle state — product card with Add to order button -->
-
-<!-- screenshot: loading state — button shows spinner and "Adding…" -->
-
-<!-- screenshot: error state — inline error with retry button -->
+![Idle state — product card with Add to order button](../screenshots/add-onetime.png)
 
 ## Configuration
 

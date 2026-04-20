@@ -13,11 +13,7 @@ Shows a personalised variant-swap offer to customers who have an active subscrip
 
 ## Screenshots
 
-<!-- screenshot: idle state — product image right, badge + heading + body + button left -->
-
-<!-- screenshot: loading state — button shows spinner and "Switching…" -->
-
-<!-- screenshot: error state — inline error alert with Try again button -->
+![Idle state — badge, copy, and CTA left; product image right](../screenshots/swap-offer.png)
 
 ## Configuration
 
