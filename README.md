@@ -7,6 +7,7 @@ Reference implementations for the [Recharge Affinity Framework](./.skills/affini
 | Folder | Tag name | Description |
 |---|---|---|
 | [`rc-add-onetime/`](./rc-add-onetime/) | `rc-add-onetime` | Offer a single product as a one-time addition to the customer's next charge |
+| [`rc-product-offer/`](./rc-product-offer/) | `rc-product-offer` | Product card with optional variant selectors and one-time / subscription plan pills |
 | [`rc-product-carousel/`](./rc-product-carousel/) | `rc-product-carousel` | Horizontally scrollable carousel of add-on products with tab filtering and a product detail modal |
 | [`rc-swap-offer/`](./rc-swap-offer/) | `rc-swap-offer` | Personalized variant-swap offer for customers on a specific subscription product |
 | [`rc-subscriptions-snake/`](./rc-subscriptions-snake/) | `rc-subscriptions-snake` | Snake mini-game that unlocks escalating subscription discounts across three levels |
@@ -39,6 +40,7 @@ Each extension has a config block near the top of the file. Minimum required cha
 | Extension | What to set |
 |---|---|
 | `rc-add-onetime` | `VARIANT_ID` |
+| `rc-product-offer` | `DEFAULT_VARIANT_ID` |
 | `rc-product-carousel` | `TAB_TAGS` and `TABS` (to match your Shopify product tags) |
 | `rc-swap-offer` | `SOURCE_PRODUCT_ID` and `TARGET_VARIANT_ID` |
 | `rc-subscriptions-snake` | `DISCOUNT_TIERS`, `DISCOUNT_CODES`, `DISCOUNT_PERCENTS` |
@@ -94,6 +96,9 @@ affinity-extensions/
 │           ├── js-utilities.md
 │           └── sdk.md
 ├── rc-add-onetime/
+├── rc-product-offer/
+│   ├── rc-product-offer.js
+│   └── README.md
 │   ├── rc-add-onetime.js
 │   └── README.md
 ├── rc-product-carousel/
