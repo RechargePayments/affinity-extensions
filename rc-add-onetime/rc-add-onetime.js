@@ -1,7 +1,7 @@
 // ─── CSS setup ───────────────────────────────────────────────────────────────
 // Paste the contents of AFF_CSS from css-constants.js (repo root) here.
-// Alternative: host .skills/affinity-framework/assets/aff-framework.css on your own CDN and
-// inject it as a <link> tag instead. See .skills/affinity-framework/SKILL.md for both patterns.
+// Alternative: host skills/affinity-framework/assets/aff-framework.css on your own CDN and
+// inject it as a <link> tag instead. See skills/affinity-framework/SKILL.md for both patterns.
 const AFF_CSS = ``;
 
 // Paste the contents of TW_CSS from css-constants.js here (optional —
