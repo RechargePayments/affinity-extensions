@@ -1,11 +1,10 @@
 ---
 name: affinity-framework
-description: Create custom extensions that visually match and feel native to the Recharge Affinity customer portal. Use when building UI that mirrors the portal’s style, leveraging aff- CSS classes for brand consistency and Tailwind (tw: prefix) for layout, or when integrating with subscription/order data via the Recharge JS SDK.
-compatibility: Designed for Cursor and any agent with file Read access.
-allowed-tools: Read
-metadata:
-  aff-css: assets/aff-framework.css
-  tw-css: assets/tw.css
+description: >-
+  Use when building any UI component or extension for the Recharge Affinity customer portal. Covers the full
+  authoring workflow: aff-* CSS classes for branded styling, Tailwind (tw: prefix) for layout, Web Component
+  structure, and Recharge JS SDK integration for customer data. Always use this skill for any Affinity extension
+  work, even for small or layout-only tasks.
 ---
 
 # Affinity Framework
@@ -27,6 +26,8 @@ Use this as the starting skeleton.
 ### CSS loading
 
 **`aff-framework.css` is required.** **`tw.css` is optional but strongly encouraged** — all examples in this skill use `tw:` classes for layout. Skip it only if managing layout yourself, and avoid `tw:` classes entirely if you do.
+
+**Asset paths:** `assets/aff-framework.css` and `assets/tw.css` (relative to this skill directory).
 
 - **Default (inline constants):** paste the full CSS as `AFF_CSS` / `TW_CSS` template literals, inject via `<style>` elements — zero external dependencies. See skeleton below.
 - **Alternative (external `<link>`):** host the files (Shopify theme asset, CDN, etc.) and inject as `<link rel="stylesheet">` with the same ID-guard pattern. Good when multiple extensions share one CSS source.
