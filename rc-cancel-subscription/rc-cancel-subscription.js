@@ -425,15 +425,22 @@ class RechargeCancelSubscription extends HTMLElement {
       : '';
     const deliveryFrequency = this._escapeHtml(this._formatDeliveryFrequency(subscription));
     const id = this._escapeHtml(subscription.id);
+    const rowStyle = [
+      'box-sizing: border-box',
+      'width: calc(100% + 48px)',
+      index < this.#subscriptions.length - 1
+        ? 'border-bottom: 1px solid var(--recharge-color-neutral-30, #e8e4e0)'
+        : ''
+    ].filter(Boolean).join('; ');
 
     return `
-      <div class="tw:-mx-6 tw:flex tw:items-center tw:justify-between tw:gap-4 tw:px-6 tw:py-4"${index < this.#subscriptions.length - 1 ? ' style="border-bottom: 1px solid var(--recharge-color-neutral-30, #e8e4e0);"' : ''}>
-        <div class="tw:flex tw:flex-col tw:gap-1">
+      <div class="tw:-mx-6 tw:flex tw:items-center tw:justify-between tw:gap-4 tw:px-6 tw:py-4" style="${rowStyle}">
+        <div class="tw:flex tw:flex-1 tw:flex-col tw:gap-1">
           <h3 class="aff-h4 aff-text-heading">${productTitle}</h3>
           ${variantTitle}
           <p class="aff-text-body aff-text-sm aff-text-muted">${deliveryFrequency}</p>
         </div>
-        <button type="button" class="recharge-button aff-btn aff-btn-secondary aff-btn-sm" data-subscription-id="${id}">Cancel</button>
+        <button type="button" class="recharge-button aff-btn aff-btn-secondary aff-btn-sm tw:shrink-0" data-subscription-id="${id}">Cancel</button>
       </div>
     `;
   }
