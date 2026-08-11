@@ -284,7 +284,7 @@ class RechargeCancelSubscription extends HTMLElement {
     this.innerHTML = `
       <div class="${textAlignClass(EXTENSION_CONFIG.textAlign)}">
         ${!hasMultipleSubscriptions && this.#errorMessage ? this._errorMarkup(this.#errorMessage) : ''}
-        <a href="#" class="aff-link" ${triggerAttributes}>
+        <a href="#" class="recharge-button aff-link" ${triggerAttributes}>
           Cancel subscription
         </a>
       </div>
