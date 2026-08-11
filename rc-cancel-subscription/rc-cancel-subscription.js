@@ -420,8 +420,9 @@ class RechargeCancelSubscription extends HTMLElement {
 
   _subscriptionMarkup(subscription, index) {
     const productTitle = this._escapeHtml(subscription.product_title || 'Product');
-    const variantTitle = subscription.variant_title
-      ? `<p class="aff-text-body aff-text-sm aff-text-muted">${this._escapeHtml(subscription.variant_title)}</p>`
+    const variantTitleValue = String(subscription.variant_title || '').trim();
+    const variantTitle = variantTitleValue && variantTitleValue.toLowerCase() !== 'default variant'
+      ? `<p class="aff-text-body aff-text-sm aff-text-muted">${this._escapeHtml(variantTitleValue)}</p>`
       : '';
     const deliveryFrequency = this._escapeHtml(this._formatDeliveryFrequency(subscription));
     const id = this._escapeHtml(subscription.id);

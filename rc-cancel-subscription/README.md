@@ -2,6 +2,12 @@
 
 tag: `recharge-cancel-subscription`
 
+![](../screenshots/cancel-1.jpg)
+
+![](../screenshots/cancel-2.jpg)
+
+![](../screenshots/cancel-3.jpg)
+
 Gives eligible customers a cancellation entry point in the Recharge customer portal. Customers with one active subscription go directly to Recharge's churn experience. Customers with multiple subscriptions can select an individual subscription, or optionally cancel all subscriptions in a single flow.
 
 ## What it does
