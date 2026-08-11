@@ -6,7 +6,7 @@ const AFF_CSS = ``;
 
 // Paste the contents of TW_CSS from css-constants.js here (optional —
 // only needed if you use tw: layout classes, which this extension does).
-const TW_CSS = ``;
+const TW_CSS = String.raw``;
 
 // ─── Configure these for your store ──────────────────────────────────────────
 

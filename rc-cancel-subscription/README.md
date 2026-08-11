@@ -25,7 +25,7 @@ Gives eligible customers a cancellation entry point in the Recharge customer por
 | `EXTENSION_CONFIG.cancelAll` | Set to `true` to offer the bulk "Cancel all subscriptions" flow for customers with more than one active subscription. |
 | `EXTENSION_CONFIG.textAlign` | Alignment for the cancellation link: `left`, `center`, or `right`. |
 | `EXTENSION_CONFIG.allowedUSStates` | An array of USPS state codes permitted to see the extension. Use `[]` for all customers. |
-| `STORE_IDENTIFIER` | Shopify store identifier used to initialize the Recharge SDK. |
+| `STORE_IDENTIFIER` | Shopify domain used to initialize the Recharge SDK, for example `your-store.myshopify.com`. |
 | `STOREFRONT_ACCESS_TOKEN` | Storefront access token used to initialize the Recharge SDK. |
 | `AFF_CSS` and `TW_CSS` | Paste the shared framework constants from [`css-constants.js`](../css-constants.js). |
 

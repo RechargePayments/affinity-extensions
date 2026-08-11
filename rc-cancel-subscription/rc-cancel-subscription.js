@@ -3,7 +3,7 @@
 const AFF_CSS = ``;
 
 // Paste the contents of TW_CSS from ../css-constants.js here.
-const TW_CSS = ``;
+const TW_CSS = String.raw``;
 
 const EXTENSION_CONFIG = Object.freeze({
   cancelAll: true,
@@ -32,7 +32,7 @@ const SDK_READY_TIMEOUT = 4500;
 const SESSION_PROMISE_KEY = '__RechargePortalExtension2SessionPromiseV3';
 const SESSION_KEY = 'RechargePortalExtension2SessionV3';
 const SDK_URL = 'https://static.rechargecdn.com/assets/storefront/recharge-client-1.89.0.min.js';
-const STORE_IDENTIFIER = 'YOUR_STORE_IDENTIFIER'; // CUSTOMIZE: Shopify store identifier
+const STORE_IDENTIFIER = 'YOUR_STORE_IDENTIFIER'; // CUSTOMIZE: Shopify domain, e.g. your-store.myshopify.com
 const STOREFRONT_ACCESS_TOKEN = 'YOUR_STOREFRONT_ACCESS_TOKEN'; // CUSTOMIZE: storefront access token
 const APP_NAME = 'RechargePortalExtensions2';
 const APP_VERSION = '2.4.3';
