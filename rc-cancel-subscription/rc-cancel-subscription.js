@@ -3,7 +3,7 @@
 const AFF_CSS = ``;
 
 // Paste the contents of TW_CSS from ../css-constants.js here.
-const TW_CSS = String.raw``;
+const TW_CSS = ``;
 
 const EXTENSION_CONFIG = Object.freeze({
   cancelAll: true,

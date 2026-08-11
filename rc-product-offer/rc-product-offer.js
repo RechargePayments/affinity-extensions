@@ -6,7 +6,7 @@ const AFF_CSS = ``;
 
 // Paste the contents of TW_CSS from css-constants.js here (optional —
 // only needed if you use tw: layout classes, which this extension does).
-const TW_CSS = String.raw``;
+const TW_CSS = ``;
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 // Any variant ID belonging to the product you want to offer.
