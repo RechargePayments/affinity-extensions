@@ -2,6 +2,8 @@
 
 tag: `rc-referral`
 
+![](../screenshots/referral.png)
+
 Shows the customer's Recharge referral link in the customer portal, with a three-step explainer, a copy button, and share links for WhatsApp, text message, email, and the device share sheet.
 
 ## What it does
