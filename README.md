@@ -11,6 +11,7 @@ Reference implementations for the [Recharge Affinity Framework](./skills/affinit
 | [`rc-product-carousel/`](./rc-product-carousel/) | `rc-product-carousel` | Horizontally scrollable carousel of add-on products with tab filtering and a product detail modal |
 | [`rc-swap-offer/`](./rc-swap-offer/) | `rc-swap-offer` | Personalized variant-swap offer for customers on a specific subscription product |
 | [`rc-subscriptions-snake/`](./rc-subscriptions-snake/) | `rc-subscriptions-snake` | Snake mini-game that unlocks escalating subscription discounts across three levels |
+| [`rc-referral/`](./rc-referral/) | `rc-referral` | Customer's referral link with a how-it-works timeline, copy button, and WhatsApp, text, and email share links |
 
 The `skills/affinity-framework/` folder contains the Affinity Framework itself — documentation, CSS assets, component reference, layout recipes, and JS utilities. Treat it as read-only reference material.
 
@@ -44,6 +45,7 @@ Each extension has a config block near the top of the file. Minimum required cha
 | `rc-product-carousel` | `TAB_TAGS` and `TABS` (to match your Shopify product tags) |
 | `rc-swap-offer` | `SOURCE_PRODUCT_ID` and `TARGET_VARIANT_ID` |
 | `rc-subscriptions-snake` | `DISCOUNT_TIERS`, `DISCOUNT_CODES`, `DISCOUNT_PERCENTS` |
+| `rc-referral` | `STORE_IDENTIFIER` and `STOREFRONT_ACCESS_TOKEN` |
 
 Search each file for `// CUSTOMIZE:` and `// BRAND:` comments — they mark every value that's store-specific.
 
@@ -107,7 +109,10 @@ affinity-extensions/
 ├── rc-swap-offer/
 │   ├── rc-swap-offer.js
 │   └── README.md
-└── rc-subscriptions-snake/
-    ├── rc-subscriptions-snake.js
+├── rc-subscriptions-snake/
+│   ├── rc-subscriptions-snake.js
+│   └── README.md
+└── rc-referral/
+    ├── rc-referral.js
     └── README.md
 ```
