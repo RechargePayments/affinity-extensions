@@ -44,7 +44,7 @@ Each extension has a config block near the top of the file. Minimum required cha
 | `rc-add-onetime` | `VARIANT_ID` |
 | `rc-product-offer` | `DEFAULT_VARIANT_ID` |
 | `rc-product-carousel` | `TAB_TAGS` and `TABS` (to match your Shopify product tags) |
-| `rc-addons-carousel` | Nothing required. Optionally `CARD_W`, `CARD_GAP`, `HEADING` |
+| `rc-addons-carousel` | Nothing required. Optionally `CARD_W`, `CARD_GAP`, `HEADING`, `MAX_QTY` |
 | `rc-swap-offer` | `SOURCE_PRODUCT_ID` and `TARGET_VARIANT_ID` |
 | `rc-subscriptions-snake` | `DISCOUNT_TIERS`, `DISCOUNT_CODES`, `DISCOUNT_PERCENTS` |
 | `rc-referral` | `STORE_IDENTIFIER` and `STOREFRONT_ACCESS_TOKEN` |

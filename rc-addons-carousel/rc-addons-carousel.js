@@ -12,6 +12,8 @@ const CARD_W = 168;
 const CARD_GAP = 12;
 // CUSTOMIZE: Heading shown above the carousel.
 const HEADING = 'Add something extra to your next order';
+// CUSTOMIZE: Highest quantity the stepper allows.
+const MAX_QTY = 10;
 
 const TAG_NAME = 'rc-addons-carousel';
 const STEP = CARD_W + CARD_GAP;
@@ -123,6 +125,20 @@ const STYLES = `
   }
   ${TAG_NAME} .ac-card-btn:disabled { opacity: 0.55; cursor: default; }
   ${TAG_NAME} .ac-card-btn:not(:disabled):hover { opacity: 0.85; }
+  ${TAG_NAME} .ac-card-actions { display: flex; flex-direction: column; gap: 6px; }
+  ${TAG_NAME} .ac-qty {
+    display: flex; align-items: center; justify-content: space-between;
+    border: 1px solid var(--recharge-color-border, #e0dbd5);
+    border-radius: calc(var(--recharge-corners-radius, 8px) / 2);
+  }
+  ${TAG_NAME} .ac-qty-btn {
+    width: 28px; height: 26px;
+    border: none; background: transparent; cursor: pointer;
+    font-size: 15px; font-family: inherit; line-height: 1;
+    color: var(--recharge-typography-primary, #3c352d);
+  }
+  ${TAG_NAME} .ac-qty-btn:disabled { opacity: 0.3; cursor: default; }
+  ${TAG_NAME} .ac-qty-value { font-size: 12px; font-weight: 600; color: var(--recharge-typography-primary, #1a1a1a); }
   ${TAG_NAME} .ac-retry { width: auto; align-self: flex-start; }
   ${TAG_NAME} .ac-error {
     font-size: 13px; color: #b31412; background: #fce8e6;
@@ -185,8 +201,9 @@ function priceHtml(price, compareAt) {
 }
 
 function buttonLabel(status) {
-  if (status === 'added') return 'Added ✓';
-  if (status === 'adding') return 'Adding…';
+  if (status === 'saving') return 'Saving…';
+  if (status === 'in-order') return 'In order ✓';
+  if (status === 'changed') return 'Update';
   return 'Add';
 }
 
@@ -197,8 +214,9 @@ class AddonsCarousel extends HTMLElement {
   #nextCharge = null;
   #parents = []; // [{ sub, products }]
   #selectedIdx = 0;
-  #adding = new Set();
-  #added = new Set(); // `${parentSubId}:${variantId}`
+  #existing = new Map(); // variantId -> [{ id, type, quantity, parentId }] from the upcoming charge
+  #draftQty = new Map(); // same key -> stepper value not yet saved
+  #saving = new Set();
   #searchQuery = '';
 
   get #parent() { return this.#parents[this.#selectedIdx] ?? null; }
@@ -229,6 +247,8 @@ class AddonsCarousel extends HTMLElement {
       listCharges:         (session, params)       => rc.charge.listCharges(session, params),
       listSubscriptions:   (session, params)       => rc.subscription.listSubscriptions(session, params),
       createSubscription:  (session, params, opts) => rc.subscription.createSubscription(session, params, opts),
+      updateSubscription:  (session, id, params, opts) => rc.subscription.updateSubscription(session, id, params, opts),
+      updateOnetime:       (session, id, params)       => rc.onetime.updateOnetime(session, id, params),
       productSearch:       (session, params)       => rc.product.productSearch(session, params),
     };
   }
@@ -250,10 +270,17 @@ class AddonsCarousel extends HTMLElement {
       this.#nextCharge = { address_id: charge.address_id, scheduled_at: charge.scheduled_at };
 
       const subs = subResult?.subscriptions ?? [];
-      const onCharge = new Set((charge.line_items ?? []).map(li => String(li.purchase_item_id)));
-      const children = subs.filter(s => s.addon_parent_subscription_id);
-      for (const child of children) {
-        this.#added.add(`${child.addon_parent_subscription_id}:${variantIdOf(child.external_variant_id)}`);
+      const subsById = new Map(subs.map(s => [String(s.id), s]));
+      const lineItems = charge.line_items ?? [];
+      const onCharge = new Set(lineItems.map(li => String(li.purchase_item_id)));
+      // line items, not listSubscriptions, so onetimes and unlisted children still count as "in the order"
+      for (const li of lineItems) {
+        this._trackExisting(variantIdOf(li.external_variant_id), {
+          id:       li.purchase_item_id,
+          type:     li.purchase_item_type ?? 'subscription',
+          quantity: Number(li.quantity),
+          parentId: subsById.get(String(li.purchase_item_id))?.addon_parent_subscription_id ?? null,
+        });
       }
 
       // standalone and parent subs look identical, so a sub is a parent only if it has add-ons to offer
@@ -313,11 +340,29 @@ class AddonsCarousel extends HTMLElement {
     );
   }
 
+  _trackExisting(variantId, entry) {
+    if (!variantId) return;
+    if (!this.#existing.has(variantId)) this.#existing.set(variantId, []);
+    this.#existing.get(variantId).push(entry);
+  }
+
+  // prefer the selected parent's child, else any sub with this variant on the upcoming order
+  _existingFor(variantId) {
+    const entries = this.#existing.get(variantId) ?? [];
+    const parentId = this.#parent?.sub.id;
+    return entries.find(e => e.parentId === parentId) ?? entries[0] ?? null;
+  }
+
+  _qtyOf(variantId) {
+    return this.#draftQty.get(this._key(variantId)) ?? this._existingFor(variantId)?.quantity ?? 1;
+  }
+
   _statusOf(variantId) {
     const key = this._key(variantId);
-    if (this.#added.has(key)) return 'added';
-    if (this.#adding.has(key)) return 'adding';
-    return 'idle';
+    if (this.#saving.has(key)) return 'saving';
+    const existing = this._existingFor(variantId);
+    if (!existing) return 'new';
+    return this._qtyOf(variantId) === existing.quantity ? 'in-order' : 'changed';
   }
 
   _handleParentChange(idx) {
@@ -330,42 +375,65 @@ class AddonsCarousel extends HTMLElement {
     this._renderCarouselArea();
   }
 
-  async _handleAdd(variantId) {
-    if (this._statusOf(variantId) !== 'idle') return;
+  _handleStep(variantId, delta) {
+    const qty = Math.min(MAX_QTY, Math.max(1, this._qtyOf(variantId) + delta));
+    this.#draftQty.set(this._key(variantId), qty);
+    this._renderCard(variantId);
+  }
 
-    const { sub } = this.#parent;
+  async _handleSave(variantId) {
+    const status = this._statusOf(variantId);
+    if (status !== 'new' && status !== 'changed') return;
+
     const key = this._key(variantId);
-    this.#adding.add(key);
-    this._updateCardButton(variantId);
+    const quantity = this._qtyOf(variantId);
+    this.#saving.add(key);
+    this._renderCard(variantId);
 
     try {
-      const { createSubscription } = await this._loadSdk();
-      await createSubscription(this.#session, {
-        address_id:                   this.#nextCharge.address_id,
-        next_charge_scheduled_at:     this.#nextCharge.scheduled_at,
-        quantity:                     1,
-        external_variant_id:          { ecommerce: variantId },
-        addon_parent_subscription_id: sub.id,
-        charge_interval_frequency:    sub.charge_interval_frequency,
-        order_interval_frequency:     sub.order_interval_frequency,
-        order_interval_unit:          sub.order_interval_unit,
-      }, { commit: true });
-      this.#added.add(key);
+      const existing = this._existingFor(variantId);
+      if (existing) {
+        await this._updateExisting(existing, quantity);
+        existing.quantity = quantity;
+      } else {
+        const child = await this._createChild(variantId, quantity);
+        this._trackExisting(variantId, { id: child.id, type: 'subscription', quantity, parentId: this.#parent.sub.id });
+      }
+      this.#draftQty.delete(key);
       document.dispatchEvent(new CustomEvent('Affinity:refresh'));
     } catch (err) {
-      console.error(`[${TAG_NAME}] add error`, err?.message);
+      console.error(`[${TAG_NAME}] save error`, err?.message);
     } finally {
-      this.#adding.delete(key);
-      this._updateCardButton(variantId);
+      this.#saving.delete(key);
+      this._renderCard(variantId);
     }
   }
 
-  _updateCardButton(variantId) {
-    const status = this._statusOf(variantId);
-    this.querySelectorAll(`[data-add-variant="${variantId}"]`).forEach(btn => {
-      btn.textContent = buttonLabel(status);
-      btn.disabled = status !== 'idle';
-    });
+  async _createChild(variantId, quantity) {
+    const { sub } = this.#parent;
+    const { createSubscription } = await this._loadSdk();
+    return createSubscription(this.#session, {
+      address_id:                   this.#nextCharge.address_id,
+      next_charge_scheduled_at:     this.#nextCharge.scheduled_at,
+      quantity,
+      external_variant_id:          { ecommerce: variantId },
+      addon_parent_subscription_id: sub.id,
+      charge_interval_frequency:    sub.charge_interval_frequency,
+      order_interval_frequency:     sub.order_interval_frequency,
+      order_interval_unit:          sub.order_interval_unit,
+    }, { commit: true });
+  }
+
+  async _updateExisting({ id, type }, quantity) {
+    const { updateSubscription, updateOnetime } = await this._loadSdk();
+    if (type === 'onetime') return updateOnetime(this.#session, id, { quantity });
+    return updateSubscription(this.#session, id, { quantity }, { commit: true });
+  }
+
+  _renderCard(variantId) {
+    const card = this.querySelector(`.ac-card[data-variant="${variantId}"]`);
+    const product = this.#parent?.products.find(p => p.variantId === variantId);
+    if (card && product) card.outerHTML = this._cardHTML(product);
   }
 
   // ─── Carousel area (re-rendered on parent switch / search) ────────────────
@@ -402,21 +470,30 @@ class AddonsCarousel extends HTMLElement {
   }
 
   _cardHTML(p) {
-    const title    = escapeHtml(p.title);
-    const status   = this._statusOf(p.variantId);
-    const disabled = status !== 'idle' ? 'disabled' : '';
+    const title  = escapeHtml(p.title);
+    const vid    = escapeHtml(p.variantId);
+    const status = this._statusOf(p.variantId);
+    const qty    = this._qtyOf(p.variantId);
+    const saving = status === 'saving';
     const img = p.image
       ? `<img class="ac-card-img" src="${escapeHtml(p.image)}" alt="${title}" />`
       : `<div class="ac-card-img ac-card-img-empty"></div>`;
 
     return `
-      <div class="ac-card">
+      <div class="ac-card" data-variant="${vid}">
         ${img}
         <p class="ac-card-title">${title}</p>
         ${p.variantTitle ? `<p class="ac-card-variant">${escapeHtml(p.variantTitle)}</p>` : ''}
         ${priceHtml(p.price, p.compareAt)}
         <div class="ac-card-spacer"></div>
-        <button class="ac-card-btn" data-add-variant="${escapeHtml(p.variantId)}" ${disabled}>${buttonLabel(status)}</button>
+        <div class="ac-card-actions">
+          <div class="ac-qty">
+            <button class="ac-qty-btn" data-action="dec" aria-label="Decrease quantity" ${saving || qty <= 1 ? 'disabled' : ''}>−</button>
+            <span class="ac-qty-value" aria-live="polite">${qty}</span>
+            <button class="ac-qty-btn" data-action="inc" aria-label="Increase quantity" ${saving || qty >= MAX_QTY ? 'disabled' : ''}>+</button>
+          </div>
+          <button class="ac-card-btn" data-action="save" ${status === 'new' || status === 'changed' ? '' : 'disabled'}>${buttonLabel(status)}</button>
+        </div>
       </div>
     `;
   }
@@ -429,6 +506,7 @@ class AddonsCarousel extends HTMLElement {
         <div class="ac-skel ac-skel-subtitle"></div>
         <div class="ac-skel ac-skel-price"></div>
         <div class="ac-card-spacer"></div>
+        <div class="ac-skel ac-skel-btn"></div>
         <div class="ac-skel ac-skel-btn"></div>
       </div>
     `;
@@ -451,8 +529,14 @@ class AddonsCarousel extends HTMLElement {
     prevBtn.addEventListener('click', () => track.scrollBy({ left: -STEP, behavior: 'smooth' }));
     nextBtn.addEventListener('click', () => track.scrollBy({ left:  STEP, behavior: 'smooth' }));
 
-    track.querySelectorAll('[data-add-variant]').forEach(btn => {
-      btn.addEventListener('click', () => this._handleAdd(btn.dataset.addVariant));
+    // delegated so cards can be re-rendered individually without rebinding
+    track.addEventListener('click', e => {
+      const btn = e.target.closest('[data-action]');
+      const variantId = btn?.closest('.ac-card')?.dataset.variant;
+      if (!variantId || btn.disabled) return;
+      if (btn.dataset.action === 'inc') this._handleStep(variantId, 1);
+      if (btn.dataset.action === 'dec') this._handleStep(variantId, -1);
+      if (btn.dataset.action === 'save') this._handleSave(variantId);
     });
 
     requestAnimationFrame(updateArrows);
@@ -547,8 +631,9 @@ class AddonsCarousel extends HTMLElement {
     this.#nextCharge = null;
     this.#parents = [];
     this.#selectedIdx = 0;
-    this.#adding = new Set();
-    this.#added = new Set();
+    this.#existing = new Map();
+    this.#draftQty = new Map();
+    this.#saving = new Set();
     this.#searchQuery = '';
     this._init();
   }
