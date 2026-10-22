@@ -9,7 +9,7 @@ Reference implementations for the [Recharge Affinity Framework](./skills/affinit
 | [`rc-add-onetime/`](./rc-add-onetime/) | `rc-add-onetime` | Offer a single product as a one-time addition to the customer's next charge |
 | [`rc-product-offer/`](./rc-product-offer/) | `rc-product-offer` | Product card with optional variant selectors and one-time / subscription plan pills |
 | [`rc-product-carousel/`](./rc-product-carousel/) | `rc-product-carousel` | Horizontally scrollable carousel of add-on products with tab filtering and a product detail modal |
-| [`rc-addons-carousel/`](./rc-addons-carousel/) | `rc-addons-carousel` | Searchable carousel of add-ons that attach to one of the customer's parent subscriptions |
+| [`rc-addons-carousel/`](./rc-addons-carousel/) | `rc-addons-carousel` | Searchable carousel of add-ons for each parent subscription on the customer's upcoming order |
 | [`rc-swap-offer/`](./rc-swap-offer/) | `rc-swap-offer` | Personalized variant-swap offer for customers on a specific subscription product |
 | [`rc-subscriptions-snake/`](./rc-subscriptions-snake/) | `rc-subscriptions-snake` | Snake mini-game that unlocks escalating subscription discounts across three levels |
 | [`rc-referral/`](./rc-referral/) | `rc-referral` | Customer's referral link with a how-it-works timeline, copy button, and WhatsApp, text, and email share links |

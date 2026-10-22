@@ -193,17 +193,17 @@ function buttonLabel(status) {
 class AddonsCarousel extends HTMLElement {
   #session = null;
   #state = 'idle'; // idle | loading | error
-  #carouselState = 'idle'; // idle | loading (parent switch)
   #errorMessage = '';
-  #products = [];
   #nextCharge = null;
-  #subscriptions = [];
-  #selectedSubIdx = 0;
+  #parents = []; // [{ sub, products }]
+  #selectedIdx = 0;
   #adding = new Set();
-  #added = new Set();
+  #added = new Set(); // `${parentSubId}:${variantId}`
   #searchQuery = '';
 
-  get #parentSub() { return this.#subscriptions[this.#selectedSubIdx] ?? null; }
+  get #parent() { return this.#parents[this.#selectedIdx] ?? null; }
+
+  _key(variantId) { return `${this.#parent?.sub.id}:${variantId}`; }
 
   connectedCallback() {
     injectStyle('aff-framework', AFF_CSS);
@@ -245,14 +245,22 @@ class AddonsCarousel extends HTMLElement {
         listSubscriptions(this.#session, { status: 'active' }),
       ]);
 
-      this._setNextCharge(chargeResult?.charges?.[0]);
+      const charge = chargeResult?.charges?.[0];
+      if (!charge) return this._hide('no queued charge');
+      this.#nextCharge = { address_id: charge.address_id, scheduled_at: charge.scheduled_at };
 
-      // add-on subscriptions point at their parent; only parents can own add-ons
-      this.#subscriptions = (subResult?.subscriptions ?? []).filter(s => !s.addon_parent_subscription_id);
-      if (!this.#subscriptions.length) return this._hide('no parent subscriptions');
+      const subs = subResult?.subscriptions ?? [];
+      const onCharge = new Set((charge.line_items ?? []).map(li => String(li.purchase_item_id)));
+      const children = subs.filter(s => s.addon_parent_subscription_id);
+      for (const child of children) {
+        this.#added.add(`${child.addon_parent_subscription_id}:${variantIdOf(child.external_variant_id)}`);
+      }
 
-      this.#products = await this._fetchProducts();
-      if (!this.#products.length) return this._hide('no add-ons for parent');
+      // standalone and parent subs look identical, so a sub is a parent only if it has add-ons to offer
+      const candidates = subs.filter(s => !s.addon_parent_subscription_id && onCharge.has(String(s.id)));
+      const results = await Promise.all(candidates.map(async sub => ({ sub, products: await this._fetchProducts(sub) })));
+      this.#parents = results.filter(p => p.products.length);
+      if (!this.#parents.length) return this._hide('no parent subscriptions on upcoming order');
 
       this.#state = 'idle';
       this._render();
@@ -264,25 +272,13 @@ class AddonsCarousel extends HTMLElement {
     }
   }
 
-  _setNextCharge(charge) {
-    if (!charge) {
-      console.warn(`[${TAG_NAME}] no queued charge, Add buttons will be disabled`);
-      return;
-    }
-    this.#nextCharge = { address_id: charge.address_id, scheduled_at: charge.scheduled_at };
-    for (const li of charge.line_items ?? []) {
-      const vid = variantIdOf(li.external_variant_id);
-      if (vid) this.#added.add(vid);
-    }
-  }
-
   _hide(reason) {
     console.warn(`[${TAG_NAME}] ${reason}, hiding`);
     this.style.display = 'none';
   }
 
-  async _fetchProducts() {
-    const vid = variantIdOf(this.#parentSub?.external_variant_id);
+  async _fetchProducts(sub) {
+    const vid = variantIdOf(sub.external_variant_id);
     if (!vid) return [];
     const { productSearch } = await this._loadSdk();
     const result = await productSearch(this.#session, {
@@ -309,33 +305,23 @@ class AddonsCarousel extends HTMLElement {
   }
 
   _filteredProducts() {
+    const products = this.#parent?.products ?? [];
     const q = this.#searchQuery.toLowerCase();
-    if (!q) return this.#products;
-    return this.#products.filter(p =>
+    if (!q) return products;
+    return products.filter(p =>
       p.title.toLowerCase().includes(q) || p.variantTitle.toLowerCase().includes(q)
     );
   }
 
   _statusOf(variantId) {
-    if (this.#added.has(variantId)) return 'added';
-    if (this.#adding.has(variantId)) return 'adding';
+    const key = this._key(variantId);
+    if (this.#added.has(key)) return 'added';
+    if (this.#adding.has(key)) return 'adding';
     return 'idle';
   }
 
-  async _handleParentChange(idx) {
-    if (idx === this.#selectedSubIdx) return;
-    this.#selectedSubIdx = idx;
-    this.#carouselState = 'loading';
-    this._renderCarouselArea();
-
-    try {
-      this.#products = await this._fetchProducts();
-    } catch (err) {
-      console.error(`[${TAG_NAME}] parent switch error`, err);
-      this.#products = [];
-    }
-
-    this.#carouselState = 'idle';
+  _handleParentChange(idx) {
+    this.#selectedIdx = idx;
     this._renderCarouselArea();
   }
 
@@ -345,12 +331,13 @@ class AddonsCarousel extends HTMLElement {
   }
 
   async _handleAdd(variantId) {
-    if (this._statusOf(variantId) !== 'idle' || !this.#nextCharge) return;
+    if (this._statusOf(variantId) !== 'idle') return;
 
-    this.#adding.add(variantId);
+    const { sub } = this.#parent;
+    const key = this._key(variantId);
+    this.#adding.add(key);
     this._updateCardButton(variantId);
 
-    const sub = this.#parentSub;
     try {
       const { createSubscription } = await this._loadSdk();
       await createSubscription(this.#session, {
@@ -363,12 +350,12 @@ class AddonsCarousel extends HTMLElement {
         order_interval_frequency:     sub.order_interval_frequency,
         order_interval_unit:          sub.order_interval_unit,
       }, { commit: true });
-      this.#added.add(variantId);
+      this.#added.add(key);
       document.dispatchEvent(new CustomEvent('Affinity:refresh'));
     } catch (err) {
       console.error(`[${TAG_NAME}] add error`, err?.message);
     } finally {
-      this.#adding.delete(variantId);
+      this.#adding.delete(key);
       this._updateCardButton(variantId);
     }
   }
@@ -391,8 +378,6 @@ class AddonsCarousel extends HTMLElement {
   }
 
   _carouselAreaHTML() {
-    if (this.#carouselState === 'loading') return this._skeletonCardsHTML();
-
     const products = this._filteredProducts();
     if (!products.length) {
       const msg = this.#searchQuery ? 'No results found.' : 'No add-ons available.';
@@ -419,7 +404,7 @@ class AddonsCarousel extends HTMLElement {
   _cardHTML(p) {
     const title    = escapeHtml(p.title);
     const status   = this._statusOf(p.variantId);
-    const disabled = status !== 'idle' || !this.#nextCharge ? 'disabled' : '';
+    const disabled = status !== 'idle' ? 'disabled' : '';
     const img = p.image
       ? `<img class="ac-card-img" src="${escapeHtml(p.image)}" alt="${title}" />`
       : `<div class="ac-card-img ac-card-img-empty"></div>`;
@@ -534,9 +519,9 @@ class AddonsCarousel extends HTMLElement {
   }
 
   _parentSelectHTML() {
-    if (this.#subscriptions.length < 2) return '';
-    const options = this.#subscriptions.map((sub, i) => {
-      const selected = i === this.#selectedSubIdx ? 'selected' : '';
+    if (this.#parents.length < 2) return '';
+    const options = this.#parents.map(({ sub }, i) => {
+      const selected = i === this.#selectedIdx ? 'selected' : '';
       return `<option value="${i}" ${selected}>${escapeHtml(this._subLabel(sub))}</option>`;
     }).join('');
     return `
@@ -558,12 +543,10 @@ class AddonsCarousel extends HTMLElement {
     this.style.display = '';
     this.#session = null;
     this.#state = 'idle';
-    this.#carouselState = 'idle';
     this.#errorMessage = '';
-    this.#products = [];
     this.#nextCharge = null;
-    this.#subscriptions = [];
-    this.#selectedSubIdx = 0;
+    this.#parents = [];
+    this.#selectedIdx = 0;
     this.#adding = new Set();
     this.#added = new Set();
     this.#searchQuery = '';
